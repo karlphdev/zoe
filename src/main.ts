@@ -12,6 +12,7 @@ import { Rainbow } from './fx/rainbow';
 import { Grain } from './fx/grain';
 import { Cursor } from './ui/cursor';
 import { Bust } from './scene/bust';
+import { Room } from './scene/room';
 import { device, hasWebGL2 } from './device';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#gl')!;
@@ -75,7 +76,13 @@ scene.add(building.root);
 const path = new CameraPath();
 const shot = newShot();
 let wall: THREE.Mesh;
-const panels = new Panels(document.querySelector<HTMLElement>('.panels')!);
+// Chambre 360° : on coupe le scroll pendant la visite, la boucle rend sa scène à la place du bâtiment.
+const room = new Room((open) => {
+  document.documentElement.classList.toggle('in-room', open);
+  if (open) scroll.lenis.stop();
+  else scroll.lenis.start();
+});
+const panels = new Panels(document.querySelector<HTMLElement>('.panels')!, () => room.open());
 
 // Parallaxe caméra, opposée au mouvement du curseur.
 const camX = new Spring(0, 40, 12);
@@ -96,6 +103,7 @@ function resize() {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight, false);
+  room.resize();
   frame();
   rails.placeMarker();
 }
@@ -180,6 +188,12 @@ const root = document.documentElement;
 renderer.setAnimationLoop((timeMs) => {
   stats?.begin();
   timer.update();
+  if (room.isOpen) {
+    room.update();
+    renderer.render(room.scene, room.camera);
+    stats?.end();
+    return;
+  }
   const dt = Math.min(timer.getDelta(), 1 / 20);
   const t = timer.getElapsed();
 

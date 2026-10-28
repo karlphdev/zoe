@@ -15,7 +15,7 @@ export class Panels {
   private tmp = new THREE.Vector3();
   private section = 1;
 
-  constructor(private root: HTMLElement) {
+  constructor(private root: HTMLElement, onRoom: () => void) {
     for (const p of panels) {
       const el = document.createElement('a');
       el.className = 'panel';
@@ -24,7 +24,10 @@ export class Panels {
       el.style.setProperty('--h', `${p.h}px`);
       el.style.setProperty('--tint', String(p.tint));
       el.innerHTML = `<span class="panel__title">${p.title}</span><span class="panel__meta">${p.meta}</span><span class="panel__link">${p.link}</span>`;
-      el.addEventListener('click', (e) => e.preventDefault()); // TODO_CONTENT : vrais liens
+      el.addEventListener('click', (e) => {
+        e.preventDefault(); // TODO_CONTENT : vrais liens
+        if ('room' in p) onRoom();
+      });
       root.appendChild(el);
       this.els.push(el);
     }

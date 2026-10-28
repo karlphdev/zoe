@@ -14,6 +14,8 @@ export const panels = [
   { title: 'Live au Sonic', meta: '2023', link: 'voir', tint: 0.3, w: 150, h: 96, slot: [0.42, 0.6] },
   { title: 'Bandcamp', meta: '', link: 'ouvrir', tint: 0, w: 104, h: 72, slot: [0.76, 0.66] },
   { title: 'Spotify', meta: '', link: 'ouvrir', tint: 0, w: 96, h: 88, slot: [0.24, 0.76] },
+  // La fenêtre de la chambre : un clic fait entrer dans la vue à 360° (scene/room.ts).
+  { title: 'Chambre 4B', meta: '360°', link: 'entrer', tint: 1, w: 112, h: 84, slot: [0.86, 0.36], room: true },
 ] as const;
 
 export const credits = {
@@ -24,6 +26,6 @@ export const credits = {
     license: 'CC BY-NC 4.0',
     licenseUrl: 'http://creativecommons.org/licenses/by-nc/4.0/',
   },
-  texture: 'Concrete Wall 008 et Marble Bust 01, Poly Haven, CC0',
+  texture: 'Concrete Wall 008 et Marble Bust 01, Poly Haven, CC0 ; chambre générée avec Higgsfield',
   fonts: 'Archivo, IBM Plex Mono, SIL OFL',
 };

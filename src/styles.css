@@ -465,3 +465,48 @@ html::-webkit-scrollbar {
     transition: none;
   }
 }
+
+/* ---------- Chambre 360° ---------- */
+
+.room {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-ui);
+  display: none;
+  cursor: grab;
+  touch-action: none;
+}
+.room.is-open {
+  display: block;
+}
+.room:active {
+  cursor: grabbing;
+}
+.room__close,
+.room__hint {
+  position: absolute;
+  bottom: 24px;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--c4);
+}
+.room__close {
+  right: 24px;
+  padding: 6px 10px;
+  border: 3px solid var(--c0);
+  background: var(--signal);
+  cursor: pointer;
+}
+.room__hint {
+  left: 24px;
+  opacity: 0.7;
+}
+.in-room .panels,
+.in-room .rainbow,
+.in-room .grid,
+.in-room .rail,
+.in-room .rail-marker {
+  display: none;
+}
